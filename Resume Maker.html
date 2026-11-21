@@ -1,0 +1,648 @@
+
+<div id="resume-maker">
+<style>
+#resume-maker{font-family:Arial,sans-serif;color:#222;max-width:1100px;margin:auto;background:#fff}
+#resume-maker *{box-sizing:border-box}
+.rm-head{background:#173b65;color:white;padding:14px;text-align:center;border-radius:7px}
+.rm-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:15px}
+.rm-form,.rm-preview{border:1px solid #ddd;border-radius:7px;padding:15px;background:white;min-width:0}
+.rm-form h3{color:#174875;border-bottom:2px solid #ddd;padding-bottom:7px;margin-top:20px}
+.rm-form label{display:block;font-weight:bold;margin:11px 0 5px}
+.rm-form input,.rm-form textarea{width:100%;padding:10px;border:1px solid #bbb;border-radius:5px;font-size:14px;background:white}
+.rm-form textarea{min-height:70px}
+.rm-btn{border:0;background:#1765a5;color:white;padding:10px 14px;border-radius:5px;cursor:pointer;margin:4px 3px;font-weight:bold}
+.rm-btn.remove{background:#c62828}
+.rm-btn.active{background:#16834b}
+.rm-option{display:inline-block;border:1px solid #aaa;border-radius:5px;padding:9px 12px;margin:4px 3px;cursor:pointer;font-size:14px;background:white}
+.rm-option.selected{background:#1765a5;color:white;border-color:#1765a5}
+.rm-added{font-size:13px;padding:8px 3px;border-bottom:1px dashed #ddd;overflow-wrap:anywhere}
+#resume-paper{background:white;color:#111;border:1px solid #222;padding:18px;font-family:"Times New Roman",serif;font-size:14px;min-height:0;height:auto;overflow-wrap:anywhere}
+#resume-paper h1{font-size:24px;margin:0 0 8px;text-transform:uppercase;color:#174875}
+#resume-paper h2{text-align:center;text-decoration:underline;font-size:18px;margin:0 0 14px;color:#174875}
+#resume-paper h3{font-size:15px;text-decoration:underline;margin:14px 0 7px;color:#174875}
+#resume-paper p{line-height:1.4;margin:5px 0;overflow-wrap:anywhere}
+#resume-paper table{width:100%;border-collapse:collapse;margin:8px 0;font-size:12px;table-layout:fixed}
+#resume-paper th,#resume-paper td{border:1px solid #222;padding:6px;text-align:center;overflow-wrap:anywhere}
+#resume-paper th{background:#1765a5;color:#fff}
+.rm-top{display:flex;justify-content:space-between;gap:10px}
+.rm-top-info{flex:1;min-width:0;overflow-wrap:anywhere}
+.rm-photo{width:95px;height:115px;object-fit:cover;border:1px solid #333;display:none}
+.rm-person{display:grid;grid-template-columns:42% 58%;gap:4px;line-height:1.6}
+.rm-person div{overflow-wrap:anywhere}
+.rm-skill{display:flex;align-items:flex-start;gap:9px;margin:5px 0 5px 15px;line-height:1.5}
+.rm-skill:before{content:"❖";flex-shrink:0;color:#025013}
+.rm-sign{text-align:right;margin-top:30px;font-size:18px;font-weight:bold}
+.rm-controls{text-align:center;margin:15px 0}
+@media(max-width:750px){
+.rm-grid{grid-template-columns:1fr}
+#resume-paper{padding:12px}
+.rm-preview{padding:7px}
+}
+
+@media print{
+@page{size:A4 portrait;margin:12mm}
+html,body{margin:0!important;padding:0!important;background:#fff!important}
+body *{visibility:hidden!important}
+#resume-maker,
+#resume-maker .rm-grid,
+#resume-maker .rm-preview,
+#resume-maker #resume-paper,
+#resume-maker #resume-paper *{visibility:visible!important}
+#resume-maker{width:100%!important;max-width:none!important;margin:0!important;padding:0!important;background:#fff!important}
+#resume-maker .rm-head,
+#resume-maker .rm-form,
+#resume-maker .rm-preview>h3{display:none!important}
+#resume-maker .rm-grid{display:block!important;margin:0!important;padding:0!important}
+#resume-maker .rm-preview{display:block!important;width:100%!important;margin:0!important;padding:0!important;border:0!important;background:#fff!important}
+#resume-maker #resume-paper{
+display:block!important;
+position:static!important;
+width:100%!important;
+max-width:none!important;
+height:auto!important;
+min-height:0!important;
+margin:0!important;
+padding:0!important;
+border:0!important;
+overflow:visible!important;
+background:#fff!important;
+color:#111!important;
+font-family:"Times New Roman",serif!important;
+font-size:11pt!important;
+break-inside:auto!important;
+page-break-inside:auto!important;
+}
+#resume-maker #resume-paper h1,
+#resume-maker #resume-paper h2,
+#resume-maker #resume-paper h3{color:#174875!important}
+#resume-maker #resume-paper h3{break-after:avoid!important;page-break-after:avoid!important}
+#resume-maker #resume-paper table{width:100%!important;border-collapse:collapse!important;break-inside:auto!important;page-break-inside:auto!important}
+#resume-maker #resume-paper th{background:#1765a5!important;color:#fff!important}
+#resume-maker #resume-paper tr{break-inside:avoid!important;page-break-inside:avoid!important}
+#resume-maker #resume-paper p{orphans:2;widows:2}
+#resume-maker #resume-paper .rm-top{break-inside:avoid;page-break-inside:avoid}
+#resume-maker #resume-paper .rm-sign{break-inside:avoid;page-break-inside:avoid}
+#resume-maker #resume-paper img{max-width:100%!important}
+}
+
+</style>
+
+<div class="rm-head">
+<h2 style="margin:0;color:white;text-decoration:none">ONLINE RESUME MAKER</h2>
+<p>Create Your Professional Resume</p>
+</div>
+
+<div class="rm-grid">
+
+<div class="rm-form">
+
+<h3>PERSONAL DETAILS</h3>
+<label>Full Name</label>
+<input id="r-name" placeholder="Enter Full Name">
+
+<label>Address</label>
+<textarea id="r-address" placeholder="Enter Address"></textarea>
+
+<label>Mobile Number</label>
+<input id="r-phone" placeholder="Mobile Number">
+
+<label>Email ID</label>
+<input id="r-email" placeholder="Email Address">
+
+<label>Upload Photo</label>
+<input type="file" id="r-photo" accept="image/*">
+
+<h3>CAREER OBJECTIVE</h3>
+<textarea id="r-objective">To seek a dynamic and challenging career an organization strives for excellence with my knowledge and team effort while making positive contribution to promote the individual opportunity and professional growth.</textarea>
+
+<h3>ACADEMIC QUALIFICATION</h3>
+<label>Select Class / Course</label>
+<div id="course-options">
+<span class="rm-option" data-course="10th">10th</span>
+<span class="rm-option" data-course="12th">12th</span>
+<span class="rm-option" data-course="B.A">B.A</span>
+<span class="rm-option" data-course="M.A">M.A</span>
+<span class="rm-option" data-course="B.Com">B.Com</span>
+<span class="rm-option" data-course="M.Com">M.Com</span>
+<span class="rm-option" data-course="B.Sc">B.Sc</span>
+<span class="rm-option" data-course="M.Sc">M.Sc</span>
+<span class="rm-option" data-course="BCA">BCA</span>
+<span class="rm-option" data-course="MCA">MCA</span>
+<span class="rm-option" data-course="ITI">ITI</span>
+<span class="rm-option" data-course="Diploma">Diploma</span>
+<span class="rm-option" data-course="Other">Other</span>
+</div>
+
+<input id="edu-other" placeholder="Other Course Name" style="display:none;margin-top:8px">
+
+<label>Board / University</label>
+<input id="edu-board" placeholder="RBSE / CBSE / University">
+
+<label>Year</label>
+<input id="edu-year" placeholder="2024">
+
+<label>Percentage / CGPA</label>
+<input id="edu-percent" placeholder="70%">
+
+<button type="button" class="rm-btn" id="add-education">+ Add Qualification</button>
+<div><b>Added Qualifications:</b><div id="edu-added"></div></div>
+
+<h3>COMPUTER SKILLS</h3>
+<div id="computer-options">
+<span class="rm-option" data-skill="Basic Computer Course">Basic Computer Course</span>
+<span class="rm-option" data-skill="RS-CIT">RS-CIT</span>
+<span class="rm-option" data-skill="RSCIT">RSCIT</span>
+<span class="rm-option" data-skill="MS Office">MS Office</span>
+<span class="rm-option" data-skill="MS Word">MS Word</span>
+<span class="rm-option" data-skill="MS Excel">MS Excel</span>
+<span class="rm-option" data-skill="Internet">Internet</span>
+<span class="rm-option" data-skill="Typing">Typing</span>
+<span class="rm-option" data-skill="DCA">DCA</span>
+<span class="rm-option" data-skill="ADCA">ADCA</span>
+<span class="rm-option" id="computer-other-button">Other</span>
+</div>
+
+<div id="computer-other-box" style="display:none;margin-top:10px">
+<input id="computer-other" placeholder="Enter Other Computer Skill">
+<button type="button" class="rm-btn" id="add-computer-other">+ Add Skill</button>
+</div>
+<div id="computer-added"></div>
+
+<h3>WORK EXPERIENCE</h3>
+<button type="button" class="rm-btn active" id="fresh-btn">Fresher</button>
+<button type="button" class="rm-btn" id="manual-btn">Manual Experience</button>
+<div id="manual-box" style="display:none">
+<label>Enter Work Experience</label>
+<textarea id="r-experience-manual" placeholder="Enter your work experience"></textarea>
+</div>
+
+<h3>PERSONAL PROFILE</h3>
+<label>Father Name</label>
+<input id="r-father" placeholder="Father Name">
+
+<label>Date of Birth</label>
+<input id="r-dob" type="date">
+
+<label>Gender</label>
+<div id="gender-options">
+<span class="rm-option" data-group="gender" data-value="Male">Male</span>
+<span class="rm-option" data-group="gender" data-value="Female">Female</span>
+<span class="rm-option" data-group="gender" data-value="Transgender">Transgender</span>
+</div>
+
+<label>Marital Status</label>
+<div id="marital-options">
+<span class="rm-option" data-group="marital" data-value="Married">Married</span>
+<span class="rm-option" data-group="marital" data-value="Unmarried">Unmarried</span>
+</div>
+
+<label>Religion</label>
+<div id="religion-options">
+<span class="rm-option" data-group="religion" data-value="Hindu">Hindu</span>
+<span class="rm-option" data-group="religion" data-value="Muslim">Muslim</span>
+<span class="rm-option" data-group="religion" data-value="Sikh">Sikh</span>
+<span class="rm-option" data-group="religion" data-value="Christian">Christian</span>
+<span class="rm-option" data-group="religion" data-value="Other">Other</span>
+</div>
+<input id="r-religion-other" placeholder="Enter Religion" style="display:none;margin-top:8px">
+
+<label>Nationality</label>
+<div id="nationality-options">
+<span class="rm-option selected" data-group="nationality" data-value="Indian">Indian</span>
+<span class="rm-option" data-group="nationality" data-value="Foreigner">Foreigner</span>
+</div>
+
+<h3>LANGUAGE KNOWLEDGE</h3>
+<div id="language-options">
+<span class="rm-option" data-language="Hindi">Hindi</span>
+<span class="rm-option" data-language="English">English</span>
+<span class="rm-option" data-language="Sanskrit">Sanskrit</span>
+<span class="rm-option" data-language="Punjabi">Punjabi</span>
+<span class="rm-option" data-language="Urdu">Urdu</span>
+<span class="rm-option" data-language="Gujarati">Gujarati</span>
+<span class="rm-option" data-language="Marathi">Marathi</span>
+<span class="rm-option" data-language="Bengali">Bengali</span>
+<span class="rm-option" data-language="Tamil">Tamil</span>
+<span class="rm-option" data-language="Telugu">Telugu</span>
+</div>
+<div style="display:flex;gap:5px;margin-top:10px">
+<input id="new-language" placeholder="Other Language">
+<button type="button" class="rm-btn" id="add-language">+ Add</button>
+</div>
+
+<h3>DECLARATION</h3>
+<textarea id="r-declaration">I do hereby declare that the statements made in this document are true to the best of my knowledge and belief.</textarea>
+
+<label>Place</label>
+<input id="r-place" placeholder="Enter Place">
+
+<label>Date</label>
+<input id="r-date" type="date">
+
+<div class="rm-controls">
+<button type="button" class="rm-btn" id="preview-btn">Preview Resume</button>
+<button type="button" class="rm-btn" id="download-btn">Download PDF</button>
+</div>
+
+</div>
+
+<div class="rm-preview">
+<h3 style="text-align:center">RESUME PREVIEW</h3>
+
+<div id="resume-paper">
+<h2>RESUME</h2>
+
+<div class="rm-top">
+<div class="rm-top-info">
+<h1 id="o-name">YOUR NAME</h1>
+<p><b>ADD :-</b> <span id="o-address"></span></p>
+<p><b>Mob :-</b> <span id="o-phone"></span></p>
+<p><b>Mail ID :-</b> <span id="o-email"></span></p>
+</div>
+<img id="o-photo" class="rm-photo">
+</div>
+
+<hr style="border:2px solid #222">
+
+<h3>CAREER OBJECTIVE</h3>
+<p id="o-objective"></p>
+
+<h3>ACADEMIC QUALIFICATION</h3>
+<table>
+<thead>
+<tr>
+<th>Sr.No.</th>
+<th>CLASS</th>
+<th>BOARD/UNIVERSITY</th>
+<th>YEAR</th>
+<th>Percentage</th>
+</tr>
+</thead>
+<tbody id="o-education"></tbody>
+</table>
+
+<h3>COMPUTER SKILL:-</h3>
+<div id="o-computer"></div>
+
+<h3>WORK EXPERIENCE</h3>
+<p id="o-experience">Fresher</p>
+
+<h3>PERSONAL PROFILE</h3>
+<div class="rm-person">
+<div>Father Name</div><div>: <span id="o-father"></span></div>
+<div>Date of Birth</div><div>: <span id="o-dob"></span></div>
+<div>Gender</div><div>: <span id="o-gender"></span></div>
+<div>Marital Status</div><div>: <span id="o-marital"></span></div>
+<div>Language Knowledge</div><div>: <span id="o-language"></span></div>
+<div>Religion</div><div>: <span id="o-religion"></span></div>
+<div>Nationality</div><div>: <span id="o-nationality">Indian</span></div>
+</div>
+
+<h3>DECLARATION</h3>
+<p id="o-declaration"></p>
+
+<div style="margin-top:25px">
+<p>Place : <span id="o-place"></span></p>
+<p>Date : <span id="o-date"></span></p>
+</div>
+
+<div class="rm-sign">(<span id="o-sign"></span>)</div>
+</div>
+</div>
+</div>
+
+<script>
+(function(){
+
+const $=id=>document.getElementById(id);
+
+const defaultObjective="To seek a dynamic and challenging career an organization strives for excellence with my knowledge and team effort while making positive contribution to promote the individual opportunity and professional growth.";
+
+const defaultDeclaration="I do hereby declare that the statements made in this document are true to the best of my knowledge and belief.";
+
+let selectedCourse="";
+let gender="",marital="",religion="",nationality="Indian";
+let experienceMode="fresh";
+let languages=[],qualifications=[],computerSkills=[];
+
+function txt(id,value){
+$(id).textContent=value||"";
+}
+
+function dateFormat(value){
+if(!value)return "";
+const p=value.split("-");
+return p.length===3?p[2]+"-"+p[1]+"-"+p[0]:value;
+}
+
+/* QUALIFICATION */
+$("course-options").addEventListener("click",function(e){
+const el=e.target.closest("[data-course]");
+if(!el)return;
+
+selectedCourse=el.dataset.course;
+
+this.querySelectorAll(".rm-option").forEach(x=>x.classList.remove("selected"));
+el.classList.add("selected");
+
+$("edu-other").style.display=selectedCourse==="Other"?"block":"none";
+});
+
+$("add-education").onclick=function(){
+
+let course=selectedCourse==="Other"?$("edu-other").value.trim():selectedCourse;
+let board=$("edu-board").value.trim();
+let year=$("edu-year").value.trim();
+let percent=$("edu-percent").value.trim();
+
+if(!course){alert("Please select Class / Course");return}
+if(!board||!year){alert("Please enter Board/University and Year");return}
+
+qualifications.push({course,board,year,percent});
+renderEducation();
+
+selectedCourse="";
+$("course-options").querySelectorAll(".rm-option").forEach(x=>x.classList.remove("selected"));
+$("edu-other").value="";
+$("edu-other").style.display="none";
+$("edu-board").value="";
+$("edu-year").value="";
+$("edu-percent").value="";
+
+updateResume();
+};
+
+function renderEducation(){
+const list=$("edu-added");
+list.replaceChildren();
+
+qualifications.forEach((q,i)=>{
+const div=document.createElement("div");
+div.className="rm-added";
+
+const span=document.createElement("span");
+span.textContent=(i+1)+". "+q.course+" | "+q.board+" | "+q.year+" | "+q.percent+" ";
+
+const btn=document.createElement("button");
+btn.type="button";
+btn.className="rm-btn remove";
+btn.textContent="Remove";
+btn.onclick=function(){
+qualifications.splice(i,1);
+renderEducation();
+updateResume();
+};
+
+div.append(span,btn);
+list.appendChild(div);
+});
+}
+
+/* COMPUTER SKILLS */
+$("computer-options").addEventListener("click",function(e){
+
+const el=e.target.closest("[data-skill]");
+
+if(el){
+const skill=el.dataset.skill;
+
+if(computerSkills.includes(skill)){
+computerSkills=computerSkills.filter(x=>x!==skill);
+el.classList.remove("selected");
+}else{
+computerSkills.push(skill);
+el.classList.add("selected");
+}
+
+renderComputer();
+updateResume();
+return;
+}
+
+if(e.target.id==="computer-other-button"){
+e.target.classList.toggle("selected");
+$("computer-other-box").style.display=e.target.classList.contains("selected")?"block":"none";
+}
+});
+
+$("add-computer-other").onclick=function(){
+const input=$("computer-other");
+const skill=input.value.trim();
+
+if(!skill)return;
+
+if(computerSkills.some(x=>x.toLowerCase()===skill.toLowerCase())){
+alert("Skill already added");
+return;
+}
+
+computerSkills.push(skill);
+input.value="";
+renderComputer();
+updateResume();
+};
+
+function renderComputer(){
+const list=$("o-computer");
+list.replaceChildren();
+
+computerSkills.forEach(skill=>{
+const div=document.createElement("div");
+div.className="rm-skill";
+div.textContent=skill.replace(/&#10070;|&amp;#10070;/gi,"").trim();
+list.appendChild(div);
+});
+
+const added=$("computer-added");
+added.replaceChildren();
+
+computerSkills.forEach((skill,i)=>{
+const div=document.createElement("div");
+div.className="rm-added";
+
+const span=document.createElement("span");
+span.textContent=skill+" ";
+
+const btn=document.createElement("button");
+btn.type="button";
+btn.className="rm-btn remove";
+btn.textContent="Remove";
+
+btn.onclick=function(){
+computerSkills.splice(i,1);
+
+document.querySelectorAll("#computer-options [data-skill]").forEach(el=>{
+if(el.dataset.skill===skill)el.classList.remove("selected");
+});
+
+renderComputer();
+updateResume();
+};
+
+div.append(span,btn);
+added.appendChild(div);
+});
+}
+
+/* WORK EXPERIENCE */
+function setExperience(mode){
+experienceMode=mode;
+$("manual-box").style.display=mode==="manual"?"block":"none";
+$("fresh-btn").classList.toggle("active",mode==="fresh");
+$("manual-btn").classList.toggle("active",mode==="manual");
+updateResume();
+}
+
+$("fresh-btn").onclick=()=>setExperience("fresh");
+$("manual-btn").onclick=()=>setExperience("manual");
+
+/* PERSONAL OPTIONS */
+document.querySelectorAll("#gender-options .rm-option,#marital-options .rm-option,#religion-options .rm-option,#nationality-options .rm-option").forEach(el=>{
+el.onclick=function(){
+
+const group=this.dataset.group;
+const value=this.dataset.value;
+
+this.parentElement.querySelectorAll(".rm-option").forEach(x=>x.classList.remove("selected"));
+this.classList.add("selected");
+
+if(group==="gender")gender=value;
+if(group==="marital")marital=value;
+
+if(group==="religion"){
+religion=value;
+$("r-religion-other").style.display=value==="Other"?"block":"none";
+}
+
+if(group==="nationality")nationality=value;
+
+updateResume();
+};
+});
+
+/* LANGUAGES */
+$("language-options").addEventListener("click",function(e){
+const el=e.target.closest("[data-language]");
+if(!el)return;
+
+const name=el.dataset.language;
+
+if(languages.includes(name)){
+languages=languages.filter(x=>x!==name);
+el.classList.remove("selected");
+}else{
+languages.push(name);
+el.classList.add("selected");
+}
+
+updateResume();
+});
+
+$("add-language").onclick=function(){
+const input=$("new-language");
+const name=input.value.trim();
+
+if(!name)return;
+
+if(languages.some(x=>x.toLowerCase()===name.toLowerCase())){
+alert("Language already added");
+return;
+}
+
+languages.push(name);
+
+const span=document.createElement("span");
+span.className="rm-option selected";
+span.dataset.language=name;
+span.textContent=name;
+
+$("language-options").appendChild(span);
+input.value="";
+updateResume();
+};
+
+/* RESUME PREVIEW */
+function updateResume(){
+
+if(!$("r-objective").value.trim())$("r-objective").value=defaultObjective;
+if(!$("r-declaration").value.trim())$("r-declaration").value=defaultDeclaration;
+
+txt("o-name",$("r-name").value.trim()||"YOUR NAME");
+txt("o-address",$("r-address").value);
+txt("o-phone",$("r-phone").value);
+txt("o-email",$("r-email").value);
+txt("o-objective",$("r-objective").value);
+txt("o-father",$("r-father").value);
+txt("o-dob",dateFormat($("r-dob").value));
+txt("o-gender",gender);
+txt("o-marital",marital);
+txt("o-language",languages.join(", "));
+txt("o-religion",religion==="Other"?$("r-religion-other").value:religion);
+txt("o-nationality",nationality);
+txt("o-declaration",$("r-declaration").value);
+txt("o-place",$("r-place").value);
+txt("o-date",dateFormat($("r-date").value));
+txt("o-sign",$("r-name").value.trim());
+txt("o-experience",experienceMode==="fresh"?"Fresher":$("r-experience-manual").value);
+
+const tbody=$("o-education");
+tbody.replaceChildren();
+
+qualifications.forEach((q,i)=>{
+const tr=document.createElement("tr");
+
+[i+1,q.course,q.board,q.year,q.percent].forEach(value=>{
+const td=document.createElement("td");
+td.textContent=value;
+tr.appendChild(td);
+});
+
+tbody.appendChild(tr);
+});
+
+renderComputer();
+}
+
+/* PHOTO */
+$("r-photo").addEventListener("change",function(){
+const file=this.files[0];
+if(!file)return;
+
+if(!file.type.startsWith("image/")){
+alert("Please select a valid photo");
+this.value="";
+return;
+}
+
+const reader=new FileReader();
+reader.onload=function(e){
+$("o-photo").src=e.target.result;
+$("o-photo").style.display="block";
+};
+reader.readAsDataURL(file);
+});
+
+/* LIVE UPDATE */
+document.querySelectorAll("#resume-maker input:not([type=file]),#resume-maker textarea").forEach(el=>{
+el.addEventListener("input",updateResume);
+});
+
+$("preview-btn").onclick=function(){
+updateResume();
+$("resume-paper").scrollIntoView({behavior:"smooth",block:"start"});
+};
+
+/* DOWNLOAD PDF - SAME PAGE, NORMAL A4 MULTI-PAGE PRINT */
+$("download-btn").onclick=function(){
+updateResume();
+window.print();
+};
+
+/* DEFAULTS */
+$("r-objective").value=defaultObjective;
+$("r-declaration").value=defaultDeclaration;
+updateResume();
+
+})();
+</script>
+</div>
